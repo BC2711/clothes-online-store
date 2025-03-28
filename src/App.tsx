@@ -7,6 +7,7 @@ import ShoppingCart from './pages/ShoppingCart';
 import HomePage from './pages/Home';
 import { Footer } from './pages/Footer';
 import CheckoutPage from './pages/CheckOutPage';
+import ProductListPage from './pages/ProductListPage';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path='/promo' element={<PromotionSection />} />
             <Route path='/shop' element={<ShoppingCart />} />
             <Route path='/check' element={<CheckoutPage />} />
+            <Route path='/productlist' element={<ProductListPage />} />
           </Routes>
         </BrowserRouter>
 

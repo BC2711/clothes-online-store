@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { JSX, useState } from 'react';
 import {
     Star as StarIcon,
     StarHalf as StarHalfIcon,
@@ -21,9 +21,40 @@ import {
     Typography
 } from '@mui/material';
 
+// Define types
+interface Review {
+    id: number;
+    user: string;
+    avatar: string;
+    rating: number;
+    date: string;
+    title: string;
+    comment: string;
+    helpful: number;
+    unhelpful: number;
+    verified: boolean;
+}
+
+interface Product {
+    name: string;
+    price: number;
+    description: string;
+    image: string;
+    rating: number;
+    reviewCount: number;
+    colors: string[];
+    inStock: boolean;
+}
+
+interface NewReview {
+    rating: number;
+    title: string;
+    comment: string;
+}
+
 const ProductReviewPage = () => {
     // Product data
-    const product = {
+    const product: Product = {
         name: "Premium Wireless Headphones",
         price: 199.99,
         description: "Experience crystal-clear sound with our premium wireless headphones. Featuring active noise cancellation and 30-hour battery life.",
@@ -35,7 +66,7 @@ const ProductReviewPage = () => {
     };
 
     // Reviews data
-    const initialReviews = [
+    const initialReviews: Review[] = [
         {
             id: 1,
             user: "Alex Johnson",
@@ -75,17 +106,17 @@ const ProductReviewPage = () => {
     ];
 
     // State
-    const [reviews, setReviews] = useState(initialReviews);
-    const [page, setPage] = useState(1);
-    const [newReview, setNewReview] = useState({
+    const [reviews, setReviews] = useState<Review[]>(initialReviews);
+    const [page, setPage] = useState<number>(1);
+    const [newReview, setNewReview] = useState<NewReview>({
         rating: 0,
         title: "",
         comment: ""
     });
-    const [activeFilter, setActiveFilter] = useState("all");
+    const [activeFilter, setActiveFilter] = useState<string>("all");
 
     // Rating distribution
-    const ratingDistribution = {
+    const ratingDistribution: Record<number, number> = {
         5: 72,
         4: 32,
         3: 12,
@@ -114,13 +145,13 @@ const ProductReviewPage = () => {
     );
 
     // Handlers
-    const handlePageChange = (event, value) => {
+    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };
 
-    const handleReviewSubmit = (e) => {
+    const handleReviewSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const review = {
+        const review: Review = {
             id: reviews.length + 1,
             user: "You",
             avatar: "",
@@ -137,21 +168,21 @@ const ProductReviewPage = () => {
         setPage(1);
     };
 
-    const handleHelpful = (id) => {
+    const handleHelpful = (id: number) => {
         setReviews(reviews.map(review =>
             review.id === id ? { ...review, helpful: review.helpful + 1 } : review
         ));
     };
 
-    const handleUnhelpful = (id) => {
+    const handleUnhelpful = (id: number) => {
         setReviews(reviews.map(review =>
             review.id === id ? { ...review, unhelpful: review.unhelpful + 1 } : review
         ));
     };
 
     // Render star rating
-    const renderStars = (rating) => {
-        const stars = [];
+    const renderStars = (rating: number) => {
+        const stars: JSX.Element[] = [];
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating % 1 >= 0.5;
 
@@ -372,8 +403,8 @@ const ProductReviewPage = () => {
                                         <Rating
                                             name="rating"
                                             value={newReview.rating}
-                                            onChange={(event, newValue) => {
-                                                setNewReview({ ...newReview, rating: newValue });
+                                            onChange={(event:any, newValue:any) => {
+                                                setNewReview({ ...newReview, rating: newValue || 0 });
                                             }}
                                             precision={0.5}
                                             size="large"
@@ -386,7 +417,7 @@ const ProductReviewPage = () => {
                                         fullWidth
                                         className="mb-4"
                                         value={newReview.title}
-                                        onChange={(e) => setNewReview({ ...newReview, title: e.target.value })}
+                                        onChange={(e:any) => setNewReview({ ...newReview, title: e.target.value })}
                                         required
                                     />
                                     <TextField
@@ -397,7 +428,7 @@ const ProductReviewPage = () => {
                                         rows={4}
                                         className="mb-4"
                                         value={newReview.comment}
-                                        onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                                        onChange={(e:any) => setNewReview({ ...newReview, comment: e.target.value })}
                                         required
                                     />
                                     <Button

@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, JSX } from 'react';
 import {
     Star as StarIcon,
     StarHalf as StarHalfIcon,
     StarBorder as StarBorderIcon,
     FilterList as FilterIcon,
-    Tune as TuneIcon,
     GridView as GridViewIcon,
     ViewList as ListViewIcon,
     LocalOffer as SaleIcon,
     NewReleases as NewIcon,
-    Check as CheckIcon
 } from '@mui/icons-material';
 import {
-    Avatar,
-    Box,
+    // Avatar,
     Button,
     Card,
     CardActionArea,
@@ -21,34 +18,30 @@ import {
     CardMedia,
     Checkbox,
     Chip,
-    Divider,
     Drawer,
     FormControl,
     FormControlLabel,
     FormGroup,
     Grid,
     IconButton,
-    InputLabel,
     MenuItem,
     Pagination,
-    Radio,
-    RadioGroup,
     Select,
     Slider,
     Typography
 } from '@mui/material';
 
-// Sample data
+// Assuming these are your imported types and data
 import { products } from '../service/productData';
 import { FilterOptions, Product, SortOption } from '../service/interface';
 
 const ProductListPage: React.FC = () => {
-    // State
+    // State with proper types
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
     const [sortOption, setSortOption] = useState<SortOption>('featured');
-    const [page, setPage] = useState(1);
-    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+    const [page, setPage] = useState<number>(1);
+    const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false);
     const [filters, setFilters] = useState<FilterOptions>({
         category: [],
         brand: [],
@@ -115,7 +108,7 @@ const ProductListPage: React.FC = () => {
         setPage(1); // Reset to first page when filters/sort change
     }, [filters, sortOption]);
 
-    // Handlers
+    // Handlers with proper types
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };
@@ -175,7 +168,7 @@ const ProductListPage: React.FC = () => {
 
     // Render star rating
     const renderStars = (rating: number) => {
-        const stars = [];
+        const stars: JSX.Element[] = [];
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating % 1 >= 0.5;
 
@@ -264,7 +257,7 @@ const ProductListPage: React.FC = () => {
                     min={0}
                     max={1000}
                     step={10}
-                    valueLabelFormat={(value) => `$${value}`}
+                    valueLabelFormat={(value:any) => `$${value}`}
                     className="text-primary"
                 />
                 <div className="flex justify-between">
@@ -392,14 +385,14 @@ const ProductListPage: React.FC = () => {
                                 <Grid container spacing={3}>
                                     {paginatedProducts.map((product) => (
                                         <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
-                                            <ProductCard product={product} />
+                                            <ProductCard product={product} renderStars={renderStars} />
                                         </Grid>
                                     ))}
                                 </Grid>
                             ) : (
                                 <div className="space-y-4">
                                     {paginatedProducts.map((product) => (
-                                        <ProductRow key={product.id} product={product} />
+                                        <ProductRow key={product.id} product={product} renderStars={renderStars} />
                                     ))}
                                 </div>
                             )}
@@ -441,7 +434,12 @@ const ProductListPage: React.FC = () => {
 };
 
 // Product Card Component (Grid View)
-const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+interface ProductCardProps {
+    product: Product;
+    renderStars: (rating: number) => JSX.Element[];
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ product, renderStars }) => {
     return (
         <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
             <CardActionArea className="flex-grow">
@@ -526,7 +524,12 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 };
 
 // Product Row Component (List View)
-const ProductRow: React.FC<{ product: Product }> = ({ product }) => {
+interface ProductRowProps {
+    product: Product;
+    renderStars: (rating: number) => JSX.Element[];
+}
+
+const ProductRow: React.FC<ProductRowProps> = ({ product, renderStars }) => {
     return (
         <Card className="hover:shadow-md transition-shadow">
             <CardActionArea>
@@ -570,7 +573,7 @@ const ProductRow: React.FC<{ product: Product }> = ({ product }) => {
                             </Typography>
                         </div>
                         <Typography variant="body1" className="mb-4 line-clamp-3">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            { 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
                         </Typography>
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                             <div className="flex items-center gap-2 mb-2 sm:mb-0">

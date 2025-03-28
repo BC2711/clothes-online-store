@@ -14,9 +14,10 @@
     "@heroicons/react": "^2.2.0",
     "@material-tailwind/react": "^3.0.0-beta.24",
     "@mui/icons-material": "^7.0.0",
+    "@mui/material": "^7.0.0",
     "iconoir-react": "^7.10.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^7.4.0",
     "swiper": "^11.2.6"
   },
