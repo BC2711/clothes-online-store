@@ -1,24 +1,34 @@
-import NavList from './components/NavList';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navigation from './pages/layout/Navigation';
-import Men from './pages/Men';
 import NewArrivals from './pages/NewArrivals';
 import ProductOverView from './pages/ProductOvervier';
+import PromotionSection from './pages/PromotionSection';
 import ShoppingCart from './pages/ShoppingCart';
-// import 'index.css';
+import HomePage from './pages/Home';
+import { Footer } from './pages/Footer';
+import CheckoutPage from './pages/CheckOutPage';
+
 
 function App() {
   return (
     <div className="app">
       <div className="mb-16">
-        {/* <NavList /> */}
         <Navigation />
       </div>
-      <div className="mt-16">
-        <NewArrivals />      
-        {/* <Men />
-        <ProductOverView />
-        <ShoppingCart /> */}
+      <div className="mt-16 pt-12">
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/new' element={<NewArrivals />} />
+            <Route path='/view' element={<ProductOverView />} />
+            <Route path='/promo' element={<PromotionSection />} />
+            <Route path='/shop' element={<ShoppingCart />} />
+            <Route path='/check' element={<CheckoutPage />} />
+          </Routes>
+        </BrowserRouter>
+
       </div>
+      <Footer />
     </div>
   );
 }
