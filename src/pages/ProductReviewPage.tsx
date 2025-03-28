@@ -20,6 +20,7 @@ import {
     TextField,
     Typography
 } from '@mui/material';
+import ReactDOM from 'react-dom/client';
 
 // Define types
 interface Review {
@@ -450,3 +451,4 @@ const ProductReviewPage = () => {
 };
 
 export default ProductReviewPage;
+export const root = ReactDOM.createRoot(document.getElementById('root'));
